@@ -11,6 +11,7 @@ interface SuccessResponseType{
     Name_Mesa: string;
     Name_Mestre:string;
     id_Mestre: string;
+    email_mestre:string;
     jogadores:[];
     personagens: [];
     
@@ -26,16 +27,16 @@ export default async (
                 res.status(400).json({error:"Please login first"});
                 return  
             }
-            const { Name_Mesa,Name_Mestre,id_Mestre }:{ Name_Mesa: string ,Name_Mestre: string ,id_Mestre: string } = req.body;
+            const { Name_Mesa,Name_Mestre,id_Mestre,email_mestre }:{ Name_Mesa: string ,Name_Mestre: string ,id_Mestre: string,email_mestre:string } = req.body;
 
-            if(!Name_Mesa || !Name_Mestre || !id_Mestre ){
+            if(!Name_Mesa || !Name_Mestre || !id_Mestre || !email_mestre ){
                 res.status(400).json({
                     error:"ERRO: Missing information"
                 })
                 return
             }
             const { db } = await connect();
-            const tableExist = await db.collection('tables').findOne({Name_Mesa:Name_Mesa, id_Mestre: id_Mestre});
+            const tableExist = await db.collection('tables').findOne({Name_Mesa:Name_Mesa, email_mestre: email_mestre});
             if(tableExist){
                 res.status(400).json({error:"Table already exist"});
                 return
@@ -43,6 +44,7 @@ export default async (
             const response = await db.collection('tables').insertOne({
                 Name_Mesa,
                 Name_Mestre,
+                email_mestre,
                 id_Mestre,
                 jogadores: [],
                 personagens: []

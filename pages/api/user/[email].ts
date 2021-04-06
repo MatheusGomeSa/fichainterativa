@@ -7,8 +7,9 @@ interface ErrorResponseType{
 }
 interface SuccessResponseType{
     _id: string;
+    email:string;
    Jogador:string;
-   mesas:string;
+   mesas:[];
    personagens:[];
 }
 
@@ -17,13 +18,13 @@ export default async (
     res: NextApiResponse<ErrorResponseType | SuccessResponseType>
     ): Promise<void> => {
          if (req.method ==='GET' ) {
-        const id = req.query.id as string; 
-            if(!id){
-                res.status(400).json({error:"Please insert a id"});
+        const email = req.query.email as string; 
+            if(!email){
+                res.status(400).json({error:"Please insert a email"});
                 return
             }
         const { db } = await connect();
-        const response = await db.collection('users').findOne({_id: new ObjectId(id)})
+        const response = await db.collection('users').findOne({email: email});
         if(!response) {
             res.status(400).json({error:"User not found!"})
             return

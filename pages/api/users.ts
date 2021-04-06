@@ -8,9 +8,10 @@ interface ErrorResponseType{
 }
 interface SuccessResponseType{
     _id: string;
-   Jogador:string;
-   mesas:string;
-   personagens:[];
+    email:string;
+    Jogador:string;
+    mesas:[];
+    personagens:[];
 }
 
 export default async (
@@ -23,9 +24,9 @@ export default async (
                 res.status(400).json({error:"Please login first"});
                 return  
             }
-            const { Jogador,idUser } = req.body;
+            const { Jogador,idUser,email } = req.body;
 
-            if(!idUser || !Jogador){
+            if(!idUser || !Jogador || !email){
                 res.status(400).json({
                     error:"ERRO: Missing information"
                 })
@@ -34,6 +35,7 @@ export default async (
             const { db } = await connect();
             const response = await db.collection('users').insertOne({
                 idUser,
+                email,
                 Jogador,
                 mesas:[],
                 personagens: [],
