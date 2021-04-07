@@ -102,14 +102,14 @@ const ProfilePage: NextPage = () => {
                 <h1 className='text-sm text-center'> Logado Como {data.data.Jogador}</h1>
                 <div className='flex'><h3>Seus personagens:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{Setnewpersonage(true)}}>+</button></div>
                 <section className='flex flex-row bg-indigo-100 rounded-md'>
-                    {data.data.personagens.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-500 p-8 m-2 w-60 h-60 text-center'><Link href={`/character/${use[1]}`}><a><div><p>Name: {use[0]}</p><p>Mesa: {use[2]}</p></div></a></Link>
+                    {data.data.personagens.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-500 p-8 m-2 w-60 h-60 text-center'><Link href={`${process.env.NEXT_PUBLIC_URL}/character/${use[1]}`}><a><div><p>Name: {use[0]}</p><p>Mesa: {use[2]}</p></div></a></Link>
                     <button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData(use[1])}>Delete</button></div>)}
 
                 </section>
                 <div className='flex'><h3>Suas Mesas:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{SetnewTable(true)}}>+</button></div>
                 <section>
                     <div className='flex flex-row bg-indigo-100 rounded-md'>
-                    {data.data.mesas.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-300 p-8 m-2 w-56 h-52 text-center'><Link href={`/table/${use[2]}`}><a><div><p>Name: {use[1]}</p></div></a></Link><button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData2(use[2])}>Delete</button></div>)}
+                    {data.data.mesas.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-300 p-8 m-2 w-56 h-52 text-center'><Link href={`${process.env.NEXT_PUBLIC_URL}/table/${use[2]}`}><a><div><p>Name: {use[1]}</p></div></a></Link><button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData2(use[2])}>Delete</button></div>)}
                     </div>
                 </section>
             </div>
