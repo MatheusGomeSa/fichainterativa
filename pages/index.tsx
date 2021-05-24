@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/client';
-import { FormEvent, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import api from '../utils/api';
@@ -34,6 +34,11 @@ const ProfilePage: NextPage = () => {
         !loggedwithouacount && !loading ? `/api/user/${session?.user.email}` :null, api);
     useEffect(() =>{ Seterrorcount((prevstate) => prevstate + 1); if(error && errorCount === 1) Setloggedwithouacount(true)},[error, Seterrorcount]);
     const [ email,setEmail ] = useState(null);
+    const data1 = {
+        Jogador:name,
+        idUser:idUser,
+        email:session?.user.email
+    }
     const data2 = {
         personagem:name_personage,
         jogador:data?.data.Jogador,
@@ -51,7 +56,7 @@ const ProfilePage: NextPage = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try{
-            await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/users`, data);
+            await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/users`, data1);
             Setloggedwithouacount(false)
         } catch(err) {
             alert(err.response.data.error);
@@ -149,7 +154,6 @@ const ProfilePage: NextPage = () => {
                 <form onSubmit={handleSubmit} className='flex flex-col items-center'>
                     <input type='name' value={name} placeholder='Name' onChange={(e) => {setName(e.target.value);}} className='bg-pink-200 my-3'/>
                     <input type='idUser' value={idUser} placeholder='NickName' onChange={(e) => {SetidUser(e.target.value);}} className='bg-pink-200 my-3'/>
-                    <input type='email' placeholder='e-mail' value={email} onChange={(e) => {setEmail(e.target.value);}} className='bg-pink-200 my-3'/>
                     <br/>
                     <button className='p-1 bg-blue-700 rounded-t-sm'  type='submit'>Criar Perfil</button>
                 </form>
