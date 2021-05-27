@@ -110,6 +110,7 @@ export default async (
                 StatusSabedoria : 0,
                 StatusCarisma : 0,
                 PontosGerais : 0,
+                PontosForca : 0,
                 PontosCoragem : 0,
                 PontosFurtivo : 0,
                 PontosInteligencia : 0,

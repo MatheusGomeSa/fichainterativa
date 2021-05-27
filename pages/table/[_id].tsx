@@ -18,7 +18,9 @@ export default function character({Name_Mesa,Name_Mestre,jogadores,personagens,_
             const data0 = {"_id": id};
             axios.delete(`${process.env.NEXT_PUBLIC_URL}/api/Delete/personagem`, {data: data0})}
     }
-    return (<>  <h1 className='text-3xl'>Nome {Name_Mesa}</h1>
+    return (<>  
+                <div className='flex flex-col m-4 sm:text-xl lg:text-3xl'>
+                <h1 className='text-3xl'>Nome {Name_Mesa}</h1>
                 <h1 className='text-3xl'>Mestre {Name_Mestre}</h1>
                 <h1 className='text-3xl'>id da mesa: {_id}</h1>
                 <h1 className='text-3xl'>Jogadores:</h1>
@@ -30,6 +32,7 @@ export default function character({Name_Mesa,Name_Mestre,jogadores,personagens,_
                         <button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData(use[1])}>Delete</button></div>)}
                     </div>
                 </section>
+                </div>
                     </>);
 }
 

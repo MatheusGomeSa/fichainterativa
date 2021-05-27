@@ -4,18 +4,16 @@ import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import api from '../utils/api';
-import users from './api/users';
 import Link from 'next/link';
-import Image from 'next/image';
 
-interface newPersonage{
+/* interface newPersonage{
     personagem:string,
     jogador:string,
     idUser:string,
 	emailUser:string,
 	mesa:string,
 	idMesa:string
-}
+} */
 
 const ProfilePage: NextPage = () => {
     const [ session, loading ] = useSession();
@@ -33,7 +31,6 @@ const ProfilePage: NextPage = () => {
     const { data, error } = useSWR(
         !loggedwithouacount && !loading ? `/api/user/${session?.user.email}` :null, api);
     useEffect(() =>{ Seterrorcount((prevstate) => prevstate + 1); if(error && errorCount === 1) Setloggedwithouacount(true)},[error, Seterrorcount]);
-    const [ email,setEmail ] = useState(null);
     const data1 = {
         Jogador:name,
         idUser:idUser,
@@ -105,16 +102,16 @@ const ProfilePage: NextPage = () => {
              <div className='flex flex-col m-4 sm:text-xl lg:text-3xl'>
                 <button onClick={():Promise<void> => signOut()}>Logout</button>
                 <h1 className='text-sm text-center'> Logado Como {data.data.Jogador}</h1>
-                <div className='flex'><h3>Seus personagens:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{Setnewpersonage(true)}}>+</button></div>
+                <div className='flex my-8'><h3>Seus personagens:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{Setnewpersonage(true)}}>+</button></div>
                 <section className='flex flex-row bg-indigo-100 rounded-md'>
-                    {data.data.personagens.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-500 p-8 m-2 w-60 h-60 text-center'><Link href={`${process.env.NEXT_PUBLIC_URL}/character/${use[1]}`} prefetch={false}><a><div><p>Name: {use[0]}</p><p>Mesa: {use[2]}</p></div></a></Link>
+                    {data.data.personagens.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-500 p-8 m-2 w-60 h-60 text-center'><Link href={`${process.env.NEXT_PUBLIC_URL}/character/${use[1]}`} prefetch={false}><a><div><p><b>{use[0]}</b></p><p>Mesa: {use[2]}</p></div></a></Link>
                     <button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData(use[1])}>Delete</button></div>)}
 
                 </section>
-                <div className='flex'><h3>Suas Mesas:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{SetnewTable(true)}}>+</button></div>
+                <div className='flex my-8'><h3>Suas Mesas:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{SetnewTable(true)}}>+</button></div>
                 <section>
                     <div className='flex flex-row bg-indigo-100 rounded-md'>
-                    {data.data.mesas.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-300 p-8 m-2 w-56 h-52 text-center'><Link href={`${process.env.NEXT_PUBLIC_URL}/table/${use[2]}`} prefetch={false}><a><div><p>Name: {use[1]}</p></div></a></Link><button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData2(use[2])}>Delete</button></div>)}
+                    {data.data.mesas.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-300 p-8 m-2 w-56 h-52 text-center'><Link href={`${process.env.NEXT_PUBLIC_URL}/table/${use[2]}`} prefetch={false}><a><div><p><b>{use[1]}</b></p></div></a></Link><button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData2(use[2])}>Delete</button></div>)}
                     </div>
                 </section>
             </div>

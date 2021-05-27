@@ -30,6 +30,7 @@ interface current_character{
     StatusSabedoria: number;
     StatusCarisma: number;
     PontosGerais: number;
+    PontosForca: number;
     PontosCoragem: number;
     PontosFurtivo: number;
     PontosInteligencia: number;
@@ -81,6 +82,7 @@ export default function character2({
     StatusSabedoria,
     StatusCarisma,
     PontosGerais,
+    PontosForca,
     PontosCoragem,
     PontosFurtivo,
     PontosInteligencia,
@@ -95,7 +97,7 @@ export default function character2({
     Truque,
     Tecnicas,
     SuperMovimento}:current_character):JSX.Element{
-        const [Mesa,setMesa] = useState(mesa)
+        
         const [Name,SetName] = useState(personagem);
         const [Jogador,SetJogador] = useState(jogador);
         const [Idade,SetIdade] = useState(idade);
@@ -117,6 +119,7 @@ export default function character2({
         const [statusSabedoria,SetStatusSabedoria ] = useState(StatusSabedoria);
         const [statusCarisma,SetStatusCarisma ] = useState(StatusCarisma);
         const [pontosGerais,SetPontosGerais ] = useState(PontosGerais);
+        const [pontosForca,SetPontosForca ] = useState(PontosForca);
         const [pontosCoragem,SetPontosCoragem ] = useState(PontosCoragem);
         const [pontosFurtivo,SetPontosFurtivo ] = useState(PontosFurtivo);
         const [pontosInteligencia,SetPontosInteligencia ] = useState(PontosInteligencia);
@@ -130,51 +133,52 @@ export default function character2({
         const [historia,SetHistoria ] = useState(Historia);
 
         const [pages,SetPages ] = useState(1);
-        
+
+        const data2 = {
+            _id,
+            mesa,
+            idMesa,
+            idUser,
+            emailUser,
+            Name,   
+            Jogador,
+            Idade,
+            Aparencia,
+            Fruta,
+            Raca,
+            Classe,
+            EstilodeLuta,
+            VidaAtual,
+            VidaMax,
+            StaminaAtual,
+            StaminaMax,
+            Infecção,
+            niveldeprocurado,
+            statusForca,
+            statusDestreza,
+            statusConstituicao,
+            statusInteligencia,
+            statusSabedoria,
+            statusCarisma,
+            pontosGerais,
+            pontosForca,
+            pontosCoragem,
+            pontosFurtivo,
+            pontosInteligencia,
+            pontosExplorador,
+            pontosSorte,
+            pontosClasse,
+            pontosUsuario,
+            pontosHaki,
+            inventario,
+            dinheiro,
+            historia,
+            Truque,
+            Tecnicas,
+            SuperMovimento,
+        } 
         const PersonSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            const data2 = {
-                _id,
-                Mesa,
-                idMesa,
-                idUser,
-                emailUser,
-                Name,   
-                Jogador,
-                Idade,
-                Aparencia,
-                Fruta,
-                Raca,
-                Classe,
-                EstilodeLuta,
-                VidaAtual,
-                VidaMax,
-                StaminaAtual,
-                StaminaTotal:StaminaMax,
-                Infecção,
-                niveldeprocurado,
-                statusForca,
-                statusDestreza,
-                statusConstituicao,
-                statusInteligencia,
-                statusSabedoria,
-                statusCarisma,
-                pontosGerais,
-                pontosCoragem,
-                pontosFurtivo,
-                pontosInteligencia,
-                pontosExplorador,
-                pontosSorte,
-                pontosClasse,
-                pontosUsuario,
-                pontosHaki,
-                inventario,
-                dinheiro,
-                historia,
-                Truque,
-                Tecnicas,
-                SuperMovimento,
-            } 
             try{
                 await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/atualizar`, data2);
             } catch(err) {
@@ -185,7 +189,7 @@ export default function character2({
     return (<>      
                     <div className='max-h-full bg-gray-100 text-3xl m-3'>
                     <form  onSubmit={PersonSubmit}>
-                        <button className='p-1 bg-blue-700 rounded-t-sm mb-3'  type='submit'>salvar</button><br/>
+                       
                         <div className='grid grid-cols-1 lg:grid-cols-2 '>
                             <div>
                                 <div className='flex flex-col items-center'>
@@ -240,6 +244,7 @@ export default function character2({
                                 </div>
                             </div>
                             <div className='bg-green-100'>
+                                <button className='p-1 bg-blue-700 rounded-t-sm mb-3'  type='submit'>salvar</button><br/>
                                 {(pages == 1) && (
                                     <div className='flex flex-col'>
                                         <button onClick={() => SetPages(2)} className='text-3xl hover:bg-green-300 px-2'>Informação</button><br/>
@@ -286,32 +291,32 @@ export default function character2({
                                          <div className='flex mt-3 w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Força: </div>
                                             <input type='Number' value={statusForca} placeholder='Status Forca' onChange={(e) => {SetStatusForca(e.target.valueAsNumber);}} className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
-                                            <input type='Number' placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
                                         </div>
                                         <div className='flex mt-3 w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Destreza: </div>
                                             <input type='Number' value={statusDestreza} placeholder='Status Destreza' onChange={(e) => {SetStatusDestreza(e.target.valueAsNumber);}} className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
-                                            <input type='Number' placeholder='DestrezaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
+                                            <input type='Number' value={0} placeholder='DestrezaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
                                         </div>
                                         <div className='flex mt-3 w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Constituição: </div>
                                             <input type='Number' value={statusConstituicao} placeholder='Status Constituicao' onChange={(e) => {SetStatusConstituicao(e.target.valueAsNumber);}} className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
-                                            <input type='Number' placeholder='ConstituicaoPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
+                                            <input type='Number' value={0} placeholder='ConstituicaoPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
                                         </div>
                                         <div className='flex mt-3 w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Inteligência: </div>
                                             <input type='Number' value={statusInteligencia} placeholder='Status Inteligencia' onChange={(e) => {SetStatusInteligencia(e.target.valueAsNumber);}} className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
-                                            <input type='Number' placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
                                         </div>
                                         <div className='flex mt-3 w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Sabedoria: </div>
                                             <input type='Number' value={statusSabedoria} placeholder='Status Sabedoria' onChange={(e) => {SetStatusSabedoria(e.target.valueAsNumber);}} className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
-                                            <input type='Number' placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
                                         </div>
                                         <div className='flex mt-3 w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Carisma: </div>
                                             <input type='Number' value={statusCarisma} placeholder='Status Carisma' onChange={(e) => {SetStatusCarisma(e.target.valueAsNumber);}} className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
-                                            <input type='Number' placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor'  className='bg-pink-200 w-1/4 px-1 border border-gray-500 text-center'/>
                                         </div>
                                     </div>
                                 )}    
@@ -324,6 +329,10 @@ export default function character2({
                                      <div className='flex w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Gerais: </div>
                                             <input type='Number' value={pontosGerais} placeholder='Gerais' onChange={(e) => {SetPontosGerais(e.target.valueAsNumber);}} className='bg-pink-200 w-1/2 px-1 border border-gray-500 text-center'/>
+                                        </div>
+                                        <div className='flex w-4/5'>
+                                            <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Força: </div>
+                                            <input type='Number' value={pontosForca} placeholder='Coragem' onChange={(e) => {SetPontosForca(e.target.valueAsNumber);}} className='bg-pink-200 w-1/2 px-1 border border-gray-500 text-center'/>
                                         </div>
                                         <div className='flex w-4/5'>
                                             <div className='text-center justify-center px-1 border border-gray-500 w-1/2 h-12'>Coragem: </div>
@@ -382,8 +391,7 @@ export default function character2({
                                  )}
                                 {}
                                 {}
-                                {}
-
+                                {}  
                             </div>
                         </div>
                     </form>
