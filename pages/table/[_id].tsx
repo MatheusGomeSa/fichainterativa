@@ -15,7 +15,7 @@ interface current_Table{
 export default function character({Name_Mesa,Name_Mestre,jogadores,personagens,_id}:current_Table):JSX.Element{
     function delData (id:string){
         if(confirm('Tem certeza que deseja deletear esse personagem ?')){
-            const data0 = {"_id": id};
+            const data0 = {_id: id};
             axios.delete(`${process.env.NEXT_PUBLIC_URL}/api/Delete/personagem`, {data: data0})}
     }
     return (<>  
@@ -38,7 +38,7 @@ export default function character({Name_Mesa,Name_Mestre,jogadores,personagens,_
 
 export const getServerSideProps: GetServerSideProps = async (context:GetServerSidePropsContext) =>{
     const _id = context.query._id as string;
-    const response = await axios.get<current_Table>(`http://localhost:3000/api/user/table/${_id}`);
+    const response = await axios.get<current_Table>(`${process.env.NEXT_PUBLIC_URL}/api/user/table/${_id}`);
     const theTable = response.data;
     return {
         props:theTable,

@@ -100,9 +100,15 @@ const ProfilePage: NextPage = () => {
         )}
         {session && data && !newPersonage && !newTable &&(
              <div className='flex flex-col m-4 sm:text-xl lg:text-3xl'>
-                <button onClick={():Promise<void> => signOut()}>Logout</button>
-                <h1 className='text-sm text-center'> Logado Como {data.data.Jogador}</h1>
-                <div className='flex my-8'><h3>Seus personagens:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{Setnewpersonage(true)}}>+</button></div>
+                    <div className='flex justify-start content-center'>
+                        <div><a>Home</a></div>
+                    </div>
+                    <div className='flex justify-end content-center'>
+                        <div className='items-center mx-4'><span className='text-sm text-center'> Logado Como {data.data.Jogador}</span></div>
+                        <div className='items-center mx-4'><button onClick={():Promise<void> => signOut()}>Logout</button></div>
+                        <div className='items-center mx-4'><span className=''>C</span></div>
+                    </div>
+                    <div className='flex my-8'><h3>Seus personagens:</h3><button className='mx-12 w-10  text-center  hover:bg-blue-500 hover:text-white font-semibold rounded-md ' onClick={() =>{Setnewpersonage(true)}}>+</button></div>
                 <section className='flex flex-row bg-indigo-100 rounded-md'>
                     {data.data.personagens.map(use => <div className='bg-white shadow-xl rounded-md border border-gray-500 p-8 m-2 w-60 h-60 text-center'><Link href={`${process.env.NEXT_PUBLIC_URL}/character/${use[1]}`} prefetch={false}><a><div><p><b>{use[0]}</b></p><p>Mesa: {use[2]}</p></div></a></Link>
                     <button className='text-red-500 hover:bg-red-500 hover:text-white border border-red-500 font-semibold rounded-md text-xs px-4 text-center align-middle' onClick={() =>delData(use[1])}>Delete</button></div>)}
