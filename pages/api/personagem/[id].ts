@@ -43,9 +43,9 @@ interface SuccessResponseType{
     Inventario: string;
     Dinheiro: number;
     Historia: string;
-    Truque: Object;
-    Tecnicas: Object;
-    SuperMovimento: Object;
+    Truque: Object[];
+    Tecnicas: Object[];
+    SuperMovimento: Object[];
 }
 export default async (
     req: NextApiRequest,

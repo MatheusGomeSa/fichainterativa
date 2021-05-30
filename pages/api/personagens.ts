@@ -44,9 +44,9 @@ interface SuccessResponseType{
     Inventario: string;
     Dinheiro: number;
     Historia: string;
-    Truque:{};
-    Tecnicas: {};
-    SuperMovimento: {}
+    Truque:Object[];
+    Tecnicas: Object[];
+    SuperMovimento: Object[]
 }
 
 export default async (
@@ -122,9 +122,9 @@ export default async (
                 Inventario : "",
                 Dinheiro : 0,
                 Historia : "",
-                Truque:{},
-                Tecnica:{},
-                SuperMovimento:{}
+                Truque:[],
+                Tecnica:[],
+                SuperMovimento: []
 
     });
     const personagemAlreadyExist = await db.collection('users').findOne({email: emailUser, personagens:personagem});

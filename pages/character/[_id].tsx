@@ -1,8 +1,23 @@
+// importando todas as bibliotecas que serão usadas
 import axios from "axios";
 import { GetServerSideProps, GetServerSidePropsContext } from "next"
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from 'next/image';
 
+interface habilidade {
+    NameHab:string;
+    teste: boolean;
+    d20: number;
+    d12: number;
+    d10: number;
+    d8: number;
+    d6: number;
+    d4: number;
+    custo:number;
+    explication:string;
+}
+
+// interface com todas as informações presentes na table Personagens
 interface current_character{
     _id: string;
     mesa: string,
@@ -42,10 +57,11 @@ interface current_character{
     Inventario: string;
     Dinheiro: number;
     Historia: string;
-    Truque: {};
-    Tecnicas: {};
-    SuperMovimento: {}
+    Truque: object[];
+    Tecnicas: [];
+    SuperMovimento: []
 }
+// requisitar as informações na table Personagens.
 export const getServerSideProps: GetServerSideProps = async (context:GetServerSidePropsContext) =>{
     const _id = context.query._id as string;
     const response = await axios.get<current_character>(`${process.env.NEXT_PUBLIC_URL}/api/personagem/${_id}`);
@@ -54,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
         props:PersonResponse,
     };
 };
-
+// função principal
 export default function character2({
     _id,
     mesa,
@@ -98,42 +114,57 @@ export default function character2({
     Tecnicas,
     SuperMovimento}:current_character):JSX.Element{
         
-        const [Name,SetName] = useState(personagem);
-        const [Jogador,SetJogador] = useState(jogador);
-        const [Idade,SetIdade] = useState(idade);
-        const [Aparencia,SetAparencia] = useState(aparencia);
-        const [Fruta,SetFruta] = useState(fruta);
-        const [Raca,SetRaca ] = useState(raca);
-        const [Classe,SetClasse] = useState(classe);
-        const [EstilodeLuta,SetEstilodeLuta] = useState(estilodeluta);       
-        const [VidaAtual,SetVidaAtual ] = useState(vidaatual);
-        const [VidaMax, SetVidaMax] = useState(vidatotal);
-        const [StaminaAtual,SetStaminaAtual] = useState(Staminaatula);
-        const [StaminaMax,SetStaminaMax] = useState(StaminaTotal);
-        const [Infecção,SetInfecção ] = useState(Infeccao);
-        const [niveldeprocurado,SetNiveldeprocurado ] = useState(Niveldeprocurado);
-        const [statusForca,SetStatusForca ] = useState(StatusForca);
-        const [statusDestreza,SetStatusDestreza ] = useState(StatusDestreza);
-        const [statusConstituicao,SetStatusConstituicao ] = useState(StatusConstituicao);
-        const [statusInteligencia,SetStatusInteligencia ] = useState(StatusInteligencia);
-        const [statusSabedoria,SetStatusSabedoria ] = useState(StatusSabedoria);
-        const [statusCarisma,SetStatusCarisma ] = useState(StatusCarisma);
-        const [pontosGerais,SetPontosGerais ] = useState(PontosGerais);
-        const [pontosForca,SetPontosForca ] = useState(PontosForca);
-        const [pontosCoragem,SetPontosCoragem ] = useState(PontosCoragem);
-        const [pontosFurtivo,SetPontosFurtivo ] = useState(PontosFurtivo);
-        const [pontosInteligencia,SetPontosInteligencia ] = useState(PontosInteligencia);
-        const [pontosExplorador,SetPontosExplorador ] = useState(PontosExplorador);
-        const [pontosSorte,SetPontosSorte ] = useState(PontosSorte);
-        const [pontosClasse,SetPontosClasse ] = useState(PontosClasse);
-        const [pontosUsuario,SetPontosUsuario ] = useState(PontosUsuario);
-        const [pontosHaki,SetPontosHaki ] = useState(PontosHaki);
+        const [Name,SetName] = useState(personagem); // Variavel mutavel para nome do personagem 
+        const [Jogador,SetJogador] = useState(jogador); // Variavel mutavel para nome do jogador
+        const [Idade,SetIdade] = useState(idade); // Variavel mutavel para Idade do personagem
+        const [Aparencia,SetAparencia] = useState(aparencia); // Variavel mutavel para aparencia do personagem
+        const [Fruta,SetFruta] = useState(fruta); // Variavel mutavel para fruta do personagem
+        const [Raca,SetRaca ] = useState(raca); // Variavel mutavel para raça do personagem
+        const [Classe,SetClasse] = useState(classe); // Variavel mutavel para Classe do personagem
+        const [EstilodeLuta,SetEstilodeLuta] = useState(estilodeluta); // Variavel mutavel para Estilo de luta do personagem
+        const [VidaAtual,SetVidaAtual ] = useState(vidaatual); // Variavel mutavel para vida atual do personagem
+        const [VidaMax, SetVidaMax] = useState(vidatotal); // Variavel mutavel para vida máxima do personagem
+        const [StaminaAtual,SetStaminaAtual] = useState(Staminaatula); // Variavel mutavel para a estamina atual do personagem
+        const [StaminaMax,SetStaminaMax] = useState(StaminaTotal); // Variavel mutavel para a estamina máxima do personagem
+        const [Infecção,SetInfecção ] = useState(Infeccao); // Variavel mutavel para a infecção do personagem
+        const [niveldeprocurado,SetNiveldeprocurado ] = useState(Niveldeprocurado); // Variavel mutavel para o nivel de procurado do personagem
+        const [statusForca,SetStatusForca ] = useState(StatusForca); // Variavel mutavel para Força do personagem
+        const [statusDestreza,SetStatusDestreza ] = useState(StatusDestreza); // Variavel mutavel para Destreza do personagem
+        const [statusConstituicao,SetStatusConstituicao ] = useState(StatusConstituicao); // Variavel mutavel para Constituição do personagem
+        const [statusInteligencia,SetStatusInteligencia ] = useState(StatusInteligencia); // Variavel mutavel para Inteligencia do personagem
+        const [statusSabedoria,SetStatusSabedoria ] = useState(StatusSabedoria); // Variavel mutavel para Sabedoria do personagem
+        const [statusCarisma,SetStatusCarisma ] = useState(StatusCarisma); // Variavel mutavel para carisma do personagem
+        const [pontosGerais,SetPontosGerais ] = useState(PontosGerais); // Variavel mutavel para os pontos gerais do personagem
+        const [pontosForca,SetPontosForca ] = useState(PontosForca); // Variavel mutavel para os pontos forca do personagem
+        const [pontosCoragem,SetPontosCoragem ] = useState(PontosCoragem); // Variavel mutavel para os pontos coragem do personagem
+        const [pontosFurtivo,SetPontosFurtivo ] = useState(PontosFurtivo); // Variavel mutavel para os pontos furtivo do personagem
+        const [pontosInteligencia,SetPontosInteligencia ] = useState(PontosInteligencia); // Variavel mutavel para os pontos Inteligencia do personagem
+        const [pontosExplorador,SetPontosExplorador ] = useState(PontosExplorador); // Variavel mutavel para os pontos Explorador do personagem
+        const [pontosSorte,SetPontosSorte ] = useState(PontosSorte); // Variavel mutavel para os pontos Sorte do personagem
+        const [pontosClasse,SetPontosClasse ] = useState(PontosClasse); // Variavel mutavel para os pontos Classe do personagem
+        const [pontosUsuario,SetPontosUsuario ] = useState(PontosUsuario); // Variavel mutavel para os pontos Usuario do personagem
+        const [pontosHaki,SetPontosHaki ] = useState(PontosHaki); 
         const [inventario,SetInventario ] = useState(Inventario);
         const [dinheiro,SetDinheiro ] = useState(Dinheiro);
         const [historia,SetHistoria ] = useState(Historia);
 
-        const [pages,SetPages ] = useState(1);
+        // Variavel mutavel para setar novas habilidades
+        const [NomeHab,SetNomeHab ] = useState(null); // nome da habilidade
+        const [HabCusto,SetHabCusto] = useState(null); // custo da habilidade
+        const [HabExplain,SetHabExplain] = useState(null); // explicação da habilidade
+        const [Habd20,SetHabd20] = useState(null); // d20 da habilidade
+        const [Habd12,SetHabd12] = useState(null); // d12 da habilidade
+        const [Habd10,SetHabd10] = useState(null); // d10 da habilidade  
+        const [Habd8,SetHabd8] = useState(null); // d8 da habilidade
+        const [Habd6,SetHabd6] = useState(null); // d6 da habilidade
+        const [Habd4,SetHabd4] = useState(null); // d4 da habilidade
+        const [haveTest,SetHaveTest] = useState(false); // Se haverá teste
 
+        const [newTipe, SetNewTipe] = useState(0); // Seleciona se adicionará um novo truque, tecnica ou super movimento
+
+
+        const [pages,SetPages ] = useState(1); // seleciona a pagina que irá aparecer.
+        // informar as variaveis que serão usadas para atualizadas o banco de dados
         const data2 = {
             _id,
             mesa,
@@ -177,6 +208,7 @@ export default function character2({
             Tecnicas,
             SuperMovimento,
         } 
+        // atualizará o banco de dados pela api(api/atualizar/index.ts)
         const PersonSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             try{
@@ -185,7 +217,48 @@ export default function character2({
                 alert(err.response.data.error);
             }
         } 
-        
+        // Classe que será usada para adicionar ou ler habilidades
+        class NewTruque {
+            NameHab:string;
+            teste: boolean;
+            d20: number;
+            d12: number;
+            d10: number;
+            d8: number;
+            d6: number;
+            d4: number;
+            custo:number;
+            explication:string;
+        }
+        // Informa todos valores para a nova habilidade adicionada
+        const AttTruques = async(event:React.FormEvent<HTMLFormElement>) =>{
+            if(!NomeHab || !HabCusto || !Habd20 || !Habd12 || !Habd10 || !Habd8 || !Habd6 || !Habd4 || !HabExplain){
+            let habTipes = [Truque, Tecnicas, SuperMovimento]
+            let newTruque = new NewTruque()
+            newTruque.NameHab = NomeHab;
+            newTruque.custo = HabCusto;
+            newTruque.d20 = Habd20;
+            newTruque.d12 = Habd12;
+            newTruque.d10 = Habd10;
+            newTruque.d8 = Habd8;
+            newTruque.d6 = Habd6;
+            newTruque.d4 = Habd4;
+            newTruque.explication = HabExplain;
+            newTruque.teste = haveTest;
+            habTipes[newTipe].push(newTruque);
+            SetNomeHab(null);
+            SetHabCusto(null);
+            SetHabd20(null);
+            SetHabd12(null);    
+            SetHabd10(null);
+            SetHabd8(null);
+            SetHabd6(null);
+            SetHabd4(null);
+            SetPages(1);}else{
+                alert("Missing Information!!")
+            }
+        }
+        // Começo do view
     return (<>      
                     <div className='max-h-full bg-gray-100 text-3xl m-3'>
                     <form  onSubmit={PersonSubmit}>
@@ -247,10 +320,13 @@ export default function character2({
                                 <button className='p-1 bg-blue-700 rounded-t-sm mb-3'  type='submit'>salvar</button><br/>
                                 {(pages == 1) && (
                                     <div className='flex flex-col'>
-                                        <button onClick={() => SetPages(2)} className='text-3xl hover:bg-green-300 px-2'>Informação</button><br/>
-                                        <button onClick={() => SetPages(3)} className='text-3xl hover:bg-green-300 px-2'>Atributos</button><br/>
-                                        <button onClick={() => SetPages(4)} className='text-3xl hover:bg-green-300 px-2'>Pontos</button><br/>
-                                        <button onClick={() => SetPages(5)} className='text-3xl hover:bg-green-300 px-2'>Inventário</button><br/>
+                                        <button onClick={() => SetPages(2)} className='text-2xl hover:bg-green-300 px-1 my-2'>Informação</button>
+                                        <button onClick={() => SetPages(3)} className='text-2xl hover:bg-green-300 px-1 my-2'>Atributos</button>
+                                        <button onClick={() => SetPages(4)} className='text-2xl hover:bg-green-300 px-1 my-2'>Pontos</button>
+                                        <button onClick={() => SetPages(5)} className='text-2xl hover:bg-green-300 px-1 my-2'>Inventário</button>
+                                        <button onClick={() => SetPages(6)} className='text-2xl hover:bg-green-300 px-1 my-2'>Truques</button>
+                                        <button onClick={() => SetPages(7)} className='text-2xl hover:bg-green-300 px-1 my-2'>Técnica</button>
+                                        <button onClick={() => SetPages(8)} className='text-2xl hover:bg-green-300 px-1 my-2'>Super Movimento</button>
                                     </div>  
                                 )}
                                 {(pages == 2) && (
@@ -375,23 +451,65 @@ export default function character2({
                                             <h3>Inventário:</h3><br/>
                                         </div>
                                             <div className='flex w-4/5'>
-                                                <textarea cols={40} value={inventario} onChange={(e) => {SetInventario(e.target.value);}} className='bg-pink-200 border border-gray-500'/><br/>
+                                                <textarea cols={80} rows={10} value={inventario} onChange={(e) => {SetInventario(e.target.value);}} className='bg-pink-200 border border-gray-500 text-lg leading-tight'/><br/>
                                             </div>
                                             <div className='flex mt-3 w-4/5'>
                                                 <span className='text-center justify-center px-1 border border-gray-500 w-1/4 h-12'>Beris</span>
-                                                <input type='Dinheiro' value={Dinheiro} placeholder='Dinheiro' onChange={(e) => {SetDinheiro(e.target.valueAsNumber);}} className='bg-pink-200 w-4/5 px-1 border border-gray-500 text-center'/><br/>
+                                                <input type='number' value={dinheiro} placeholder='Dinheiro' onChange={(e) => {SetDinheiro(e.target.valueAsNumber);}} className='bg-pink-200 w-4/5 px-1 border border-gray-500 text-center'/><br/>
                                             </div>
                                             <div className='flex mt-3 w-4/5'>
                                                 <h3>Historia:</h3><br/>
                                             </div>
                                             <div className='flex w-4/5'>    
-                                                <textarea cols={40} value={Historia} onChange={(e) => {SetHistoria(e.target.value);}} className='bg-pink-200 border border-gray-500'/><br/>
+                                                <textarea cols={80} rows={10} value={historia} onChange={(e) => {SetHistoria(e.target.value);}} className='bg-pink-200 border border-gray-500 text-lg leading-tight'/><br/>
                                             </div>
                                         </div>
                                  )}
-                                {}
-                                {}
-                                {}  
+                                {(pages == 6) && (<div>
+                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                    <button onClick={() =>{SetPages(9);SetNewTipe(0)}}>New</button>
+                                    {Truque?.map((use) => <div>{use.NameHab}</div>)}
+                                </div>)}
+                                {(pages == 7) && (<div>
+                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                    <button onClick={() =>{SetPages(9);SetNewTipe(1)}}>New</button>
+                                    {Tecnicas?.map((use) => <div>{use.NameHab}</div>)}
+                                </div>)}
+                                {(pages == 8) && (<div>
+                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                    <button onClick={() =>{SetPages(9);SetNewTipe(2)}}>New</button>
+                                    {SuperMovimento?.map((use) => <div>{use.NameHab}</div>)}
+                                </div>)}  
+                                {(pages == 9) && (
+                                    <div>
+                                        <form onSubmit={AttTruques}>
+                                            <label htmlFor='NomedaHabilidade' className='mx-2'>Nome da Habilidade</label>
+                                            <input id='NomedaHabilidade' className='bg-pink-200 my-3' type='text'   value={NomeHab} onChange={(e) => {SetNomeHab(e.target.value)}}/><br/>
+                                            <label htmlFor='danoD20'>D20:</label>
+                                            <input id='danoD20' className='bg-pink-200 my-3 w-16 mx-2' type='number' value={Habd20} onChange={(e) => {SetHabd20(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD12'>D12:</label>
+                                            <input id='danoD12' className='bg-pink-200 my-3 w-16 mx-2' type='number' value={Habd12} onChange={(e) => {SetHabd12(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD10'>D10:</label>
+                                            <input id='danoD10' className='bg-pink-200 my-3 w-16 mx-2' type='number' value={Habd10} onChange={(e) => {SetHabd10(e.target.valueAsNumber)}}/><br/>
+                                            <label htmlFor='danoD8'>D8:</label>
+                                            <input id='danoD8' className='bg-pink-200 my-3 w-16 mx-2' type='number' value={Habd8} onChange={(e) => {SetHabd8(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD6'>D6:</label>
+                                            <input id='danoD6' className='bg-pink-200 my-3 w-16 mx-2' type='number' value={Habd6} onChange={(e) => {SetHabd6(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD4'>D4:</label>
+                                            <input id='danoD4' className='bg-pink-200 my-3 w-16 mx-2' type='number' value={Habd4} onChange={(e) => {SetHabd4(e.target.valueAsNumber)}}/>
+                                            <div>
+                                                <input type="radio" id='Have' onChange={()=>SetHaveTest(true)}/>
+                                                <label htmlFor="Have" className='mx-10'>Have</label>
+                                                <input type="radio" id='DontHave' onChange={ ()=>SetHaveTest(false)} />
+                                                <label htmlFor='DontHave' className='mx-10'>Don't Have</label>
+                                            </div>
+                                            <label htmlFor='CustoHabilidade' className='mx-2'>Custo</label>
+                                            <input id='CustoHabilidade'className='bg-pink-200 my-3 w-48' type='number' value={HabCusto} onChange={(e) => {SetHabCusto(e.target.valueAsNumber)}}/><br/>
+                                            <textarea className='bg-pink-200 my-3' value={HabExplain} onChange={(e)=> SetHabExplain(e.target.value)}></textarea><br/>
+                                            <button className='p-1 bg-blue-700 rounded-t-sm'  type='submit'>Criar Truque</button>
+                                        </form>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </form>

@@ -129,7 +129,7 @@ const ProfilePage: NextPage = () => {
                 <h1 className='text-3xl text-center'>Adicione um novo personagem:</h1>
                 <button onClick={() =>{Setnewpersonage(false)}}>X</button>
                 <form onSubmit={PersonSubmit} className='flex flex-col items-center'>
-                    <input type='name_personage' value={name_personage} placeholder='Nome do personagem' onChange={(e) => {setname_personage(e.target.value);}} className='bg-pink-200 my-3'/>
+                    <input type='name_personage' value={name_personage} placeholder='Nome do personagem' onChange={(e) => {setname_personage(e.target.value);}}     />
                     <input type='mesa_name' value={mesa_name} placeholder='Nome da mesa' onChange={(e) => {setmesa_name(e.target.value);}} className='bg-pink-200 my-3'/>
                     <input type='mesa_id' placeholder='id da mesa' value={mesa_id} onChange={(e) => {setmesa_id(e.target.value);}} className='bg-pink-200 my-3'/>
                     <br/>
