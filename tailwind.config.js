@@ -9,6 +9,7 @@ module.exports = {
       ...theme('colors'),
       'primary':'#f5fbef',
       'secondary':'#3943B7',
+      'Dark-secondary':'#272e7d',
       'tertiary':'#E8AA14',
       'danger':'#C1292E'
     }),
