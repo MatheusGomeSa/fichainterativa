@@ -4,18 +4,6 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next"
 import React, { useState } from "react";
 import Image from 'next/image';
 
-interface habilidade {
-    NameHab:string;
-    teste: boolean;
-    d20: number;
-    d12: number;
-    d10: number;
-    d8: number;
-    d6: number;
-    d4: number;
-    custo:number;
-    explication:string;
-}
 
 // interface com todas as informações presentes na table Personagens
 interface current_character{
@@ -468,17 +456,17 @@ export default function character2({
                                 {(pages == 6) && (<div>
                                     <button onClick={() => {SetPages(1)}}>X</button>
                                     <button onClick={() =>{SetPages(9);SetNewTipe(0)}}>New</button>
-                                    {Truque?.map((use) => <div>{use.NameHab}</div>)}
+                                    {Truque?.map((use:NewTruque) => <div>{use.NameHab}</div>)}
                                 </div>)}
                                 {(pages == 7) && (<div>
                                     <button onClick={() => {SetPages(1)}}>X</button>
                                     <button onClick={() =>{SetPages(9);SetNewTipe(1)}}>New</button>
-                                    {Tecnicas?.map((use) => <div>{use.NameHab}</div>)}
+                                    {Tecnicas?.map((use:NewTruque) => <div>{use.NameHab}</div>)}
                                 </div>)}
                                 {(pages == 8) && (<div>
                                     <button onClick={() => {SetPages(1)}}>X</button>
                                     <button onClick={() =>{SetPages(9);SetNewTipe(2)}}>New</button>
-                                    {SuperMovimento?.map((use) => <div>{use.NameHab}</div>)}
+                                    {SuperMovimento?.map((use:NewTruque) => <div>{use.NameHab}</div>)}
                                 </div>)}  
                                 {(pages == 9) && (
                                     <div>
