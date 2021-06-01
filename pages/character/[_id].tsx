@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Image from 'next/image';
 
 
+
+
 // interface com todas as informações presentes na table Personagens
 interface current_character{
     _id: string;

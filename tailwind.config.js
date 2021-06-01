@@ -12,6 +12,13 @@ module.exports = {
       'tertiary':'#E8AA14',
       'danger':'#C1292E'
     }),
+    textColor: theme =>({
+      ...theme('colors'),
+      'primary':'#f5fbef',
+      'secondary':'#3943B7',
+      'tertiary':'#E8AA14',
+      'danger':'#C1292E'
+    })  ,
     backgroundImage: theme =>({
       'personagem':'url("../public/rpg/eu.jpg")'
     }),
