@@ -7,15 +7,6 @@ import api from '../utils/api';
 import Link from 'next/link';
 import Image from 'next/image';
 
-/* interface newPersonage{
-    personagem:string,
-    jogador:string,
-    idUser:string,
-	emailUser:string,
-	mesa:string,
-	idMesa:string
-} */
-
 const ProfilePage: NextPage = () => {
     const [ session, loading ] = useSession();
     const [ name,setName ] = useState(null);
@@ -134,7 +125,7 @@ const ProfilePage: NextPage = () => {
                         </div>
                     </div>
 
-                    <div className={`${ Show ? 'h-0' : 'hidden'} absolute rounded-lg bg-primary shadow-2xl`} style={{border: '1px solid #ccc',right:'1.5rem',width:'14rem',height:'20rem', top:'5rem'}}>
+            <div className={`${ Show ? 'h-0' : 'hidden'} absolute rounded-lg bg-primary shadow-2xl`} style={{border: '1px solid #ccc',right:'1.5rem',width:'14rem',height:'20rem', top:'5rem'}}>
                                         <div className='flex flex-col justify-items-center'>
                                             <div className='flex justify-center my-5'><Image
                                             className='rounded-full no-rea'

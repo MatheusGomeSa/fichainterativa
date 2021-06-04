@@ -3,12 +3,13 @@ import axios from "axios";
 import { GetServerSideProps, GetServerSidePropsContext } from "next"
 import React, { useState } from "react";
 import Image from 'next/image';
+import Link from 'next/link'
 
 
 
 
 // interface com todas as informações presentes na table Personagens
-interface current_character{
+interface CurrentCharacter{
     _id: string;
     mesa: string,
     idMesa: string;
@@ -54,7 +55,7 @@ interface current_character{
 // requisitar as informações na table Personagens.
 export const getServerSideProps: GetServerSideProps = async (context:GetServerSidePropsContext) =>{
     const _id = context.query._id as string;
-    const response = await axios.get<current_character>(`${process.env.NEXT_PUBLIC_URL}/api/personagem/${_id}`);
+    const response = await axios.get<CurrentCharacter>(`${process.env.NEXT_PUBLIC_URL}/api/personagem/${_id}`);
     const PersonResponse = response.data;
     return {
         props:PersonResponse,
@@ -102,7 +103,7 @@ export default function character2({
     Historia,
     Truque,
     Tecnicas,
-    SuperMovimento}:current_character):JSX.Element{
+    SuperMovimento}:CurrentCharacter):JSX.Element{
         
         const [Name,SetName] = useState(personagem); // Variavel mutavel para nome do personagem 
         const [Jogador,SetJogador] = useState(jogador); // Variavel mutavel para nome do jogador
@@ -221,6 +222,11 @@ export default function character2({
             custo:number;
             explication:string;
         }
+        function Zero(){
+            
+        }
+
+
         // Informa todos valores para a nova habilidade adicionada
         const AttTruques = async(event:React.FormEvent<HTMLFormElement>) =>{
             if(!NomeHab || !HabCusto || !Habd20 || !Habd12 || !Habd10 || !Habd8 || !Habd6 || !Habd4 || !HabExplain){
@@ -252,7 +258,7 @@ export default function character2({
         // Começo do view
     return (<div className='text-base font-Roboto bg-primary h-screen w-full' >      
                     <div className='flex justify-between bg-secondary py-2 px-6 items-center'>
-                        <button className='ml-16'><svg className='fill-current text-tertiary' xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" viewBox="0 0 200 228" version="1.1">
+                        <a className='ml-16' href=''><Link href={`${process.env.NEXT_PUBLIC_URL}`}><svg className='fill-current text-tertiary' xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" viewBox="0 0 200 228" version="1.1">
                                     <g id="surface1">
                                     <path  d="M 82.398438 18.632812 C 74.699219 27.203125 62.5 40.957031 55.101562 49.226562 L 41.601562 64.273438 L 98 64.574219 C 129 64.671875 154.601562 64.574219 154.898438 64.273438 C 155.199219 63.875 155 63.378906 154.398438 62.980469 C 153.800781 62.582031 146.199219 54.210938 137.5 44.34375 C 102.300781 4.582031 100.800781 2.988281 98.5 2.988281 C 96.800781 2.988281 92.601562 7.074219 82.398438 18.632812 Z M 82.398438 18.632812 "/>
                                     <path  d="M 45.5 29.496094 C 27.898438 39.660156 12 48.628906 10.300781 49.527344 C 6.398438 51.519531 6.199219 52.515625 9.300781 53.710938 C 10.5 54.210938 15.101562 56.203125 19.5 58.296875 C 32.898438 64.574219 30.699219 65.769531 54.5 38.863281 C 65.898438 26.007812 76 14.648438 76.800781 13.652344 C 77.601562 12.753906 78.101562 11.757812 77.898438 11.558594 C 77.699219 11.261719 63.101562 19.433594 45.5 29.496094 Z M 45.5 29.496094 "/>
@@ -265,7 +271,7 @@ export default function character2({
                                     <path  d="M 19.101562 176.878906 C 19.898438 177.675781 24.199219 180.464844 28.601562 182.957031 C 41.101562 190.234375 49.601562 195.117188 53.199219 197.207031 C 55 198.203125 64.699219 203.785156 74.800781 209.664062 C 84.898438 215.445312 93.601562 220.226562 94.101562 220.226562 C 94.699219 220.226562 94.898438 213.449219 94.800781 203.085938 L 94.5 185.949219 L 87 184.75 C 79.5 183.554688 76.101562 183.058594 48.5 179.371094 C 40.300781 178.273438 30.5 176.878906 26.800781 176.382812 C 17.699219 174.984375 17.300781 175.085938 19.101562 176.878906 Z M 19.101562 176.878906 "/>
                                     <path  d="M 161 177.476562 C 148.699219 179.371094 129.601562 182.0625 111.300781 184.453125 L 102 185.75 L 102 202.988281 C 102 212.453125 102.398438 220.226562 102.898438 220.226562 C 103.699219 220.226562 131.398438 204.582031 139.199219 199.601562 C 141.300781 198.402344 143.199219 197.308594 143.398438 197.308594 C 143.601562 197.308594 148.5 194.617188 154.199219 191.230469 C 159.898438 187.839844 167 183.753906 170 182.0625 C 177.800781 177.777344 179 176.980469 179 176.183594 C 179 175.085938 175.398438 175.382812 161 177.476562 Z M 161 177.476562 "/>
                                     </g>
-                                </svg></button>
+                                </svg></Link></a>
                         <button className='mr-16' onClick={()=>Setmenu(!menu)}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
                     </div>
                     <div className={`${ menu ? 'w-0':'hidden'} absolute rounded-lg bg-primary shadow-2xl`} style={{border: '1px solid #ccc',right:'1rem',width:'14rem',height:'25rem', top:'4.5rem'}}>
@@ -283,8 +289,8 @@ export default function character2({
                     <div >
                     <form  onSubmit={PersonSubmit} className='flex content-center justify-center overflow-auto' style={{height:"95vh"}}>
 
-                        <div className='grid lg:grid-cols-2 grid-cols-1 place-content-center place-items-center mx-16 gap-16'>
-                                <div className={`lg:grid grid-cols-2 place-content-center text-2xl w-5/6 ${pages == 1 ? 'grid' : 'hidden'}`}>
+                        <div className='grid lg:grid-cols-2 grid-cols-1 place-content-center place-items-center lg:mx-16 m-8 gap-16'>
+                                <div className={`lg:grid grid-cols-2 place-content-center text-2xl lg:w-5/6 ${pages == 1 ? 'grid' : 'hidden'}`}>
                                 <button className=''  type='submit'>salvar</button>
                                 <div className='col-span-2 flex justify-center mb-2'>
                                     <Image
@@ -296,39 +302,39 @@ export default function character2({
                                         />
                                     </div>
                                         <div className='border border-gray-500 mb-2 mr-px'>Name: </div>
-                                        <input type='text' value={Name} onChange={(e) => {SetName(e.target.value);}} className='border border-gray-500 mb-2 px-2'/>
+                                        <input type='text' value={Name} onChange={(e) => {SetName(e.target.value);}} className='border border-gray-500 mb-2 px-2 text-center'/>
 
                                         <div  className='border border-gray-500 mb-2 mr-px'>Jogador: </div>  
-                                        <input type='text' value={Jogador} onChange={(e) => {SetJogador(e.target.value);}}  className='border border-gray-500 mb-2 px-2'/>
+                                        <input type='text' value={Jogador} onChange={(e) => {SetJogador(e.target.value);}}  className='border border-gray-500 mb-2 px-2 text-center'/>
 
                                         <div  className='border border-gray-500 mb-2 mr-px'>Nivel de Procurado: </div>
-                                        <input type='number' value={niveldeprocurado} onChange={(e) => {SetNiveldeprocurado(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2'/>
-                                        <div  className='col-span-2 grid grid-cols-4 mb-2'>
-                                            <div  className='border border-gray-500 mr-px'>Atual:</div>
-                                            <input type='number' value={VidaAtual} max={VidaMax} onChange={(e) => {SetVidaAtual(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 mr-px'/>
-                                            <div  className='border border-gray-500 mr-px' >Máxima:</div>
-                                            <input type='number' value={VidaMax} min={0} onChange={(e) => {SetVidaMax(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2'/>
+                                        <input type='number' value={niveldeprocurado} onChange={(e) => {SetNiveldeprocurado(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 text-center'/>
+                                        <div  className='col-span-2 grid grid-cols-4 place-items-stretch'>
+                                            <div  className='border border-gray-500 mb-2 mr-px'>Atual:</div>
+                                            <input type='number' value={VidaAtual} max={VidaMax} onChange={(e) => {SetVidaAtual(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 mr-px text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px' >Máxima:</div>
+                                            <input type='number' value={VidaMax} min={0} onChange={(e) => {SetVidaMax(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 text-center'/>
                                         </div>
                                     <div  className='col-span-2 mb-2'>
                                         <div  id="health" className='bg-red-600 h-1' style={{width:`${(VidaAtual/VidaMax)*100}%`}}></div>
                                     </div>
-                                        <div className='col-span-2 grid grid-cols-4 mb-2 mr-px'>
-                                            <div  className='border border-gray-500 mr-px'>Atual:</div>
-                                            <input type='number'max={StaminaMax} value={StaminaAtual} onChange={(e) => {SetStaminaAtual(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 mr-px'/>
-                                            <div  className='border border-gray-500 mr-px' >Máxima:</div>
-                                            <input type='number' value={StaminaMax} min={0} onChange={(e) => {SetStaminaMax(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2'/>
+                                        <div className='col-span-2 grid grid-cols-4 place-items-stretch'>
+                                            <div  className='border border-gray-500 mb-2 mr-px'>Atual:</div>
+                                            <input type='number'max={StaminaMax} value={StaminaAtual} onChange={(e) => {SetStaminaAtual(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 mr-px text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px' >Máxima:</div>
+                                            <input type='number' value={StaminaMax} min={0} onChange={(e) => {SetStaminaMax(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 text-center'/>
                                         </div>
                                     <div  className='col-span-2 mb-2'>
                                         <div  id="health" className='bg-yellow-400 h-1' style={{width:`${(StaminaAtual/StaminaMax)*100}%`}}></div>
                                     </div>
                                         <div className='text-center justify-center px-1 border border-gray-500 mb-2 mr-px'>Infecção: </div>
-                                        <input type='number' min={0} value={Infecção} onChange={(e) => {SetInfecção(e.target.valueAsNumber);}}  className='border border-gray-500 px-2'/><br/>
-                                    <div  className='col-span-2 mb-2'>
+                                        <input type='number' min={0} value={Infecção} onChange={(e) => {SetInfecção(e.target.valueAsNumber);}}  className='border border-gray-500 mb-2 px-2 text-center'/>
+                                    <div  className='col-span-2'>
                                         <div  id="health" className='bg-green-600 h-1' style={{width:`${(Infecção/20)*100}%`}}></div>
                                     </div>
                                 </div>
                                 {(pages == 1) && (
-                                    <div className='hidden lg:grid grid-cols-1 place-content-center w-5/6' >
+                                    <div className='hidden lg:grid grid-cols-1 place-content-center lg:w-5/6' >
                                         <div><button onClick={() => SetPages(2)}  className='text-2xl'>Informação</button></div>
                                         <div><button onClick={() => SetPages(3)}  className='text-2xl'>Atributos</button></div>
                                         <div><button onClick={() => SetPages(4)}  className='text-2xl'>Pontos</button></div>
@@ -339,75 +345,75 @@ export default function character2({
                                     </div>  
                                 )}
                                 {(pages == 2) && (
-                                    <div  className='grid grid-cols-2 place-content-center w-5/6'>
+                                    <div  className='grid grid-cols-2 place-content-center lg:w-5/6'>
                                         <button className='col-span-2' onClick={()=>{SetPages(1)}}>X</button>
-                                            <div  className='text-2xl'>Idade: </div>
-                                            <input type='number' value={Idade} placeholder='idade' onChange={(e) => {SetIdade(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Aparência: </div>
-                                            <input type='text' value={Aparencia} placeholder='aparencia' onChange={(e) => {SetAparencia(e.target.value);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Fruta: </div>
-                                            <input type='text' value={Fruta} placeholder='Fruta' onChange={(e) => {SetFruta(e.target.value);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Raça: </div>
-                                            <input type='text' value={Raca} placeholder='raça' onChange={(e) => {SetRaca(e.target.value);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Classe: </div>
-                                            <input type='text' value={Classe} placeholder='Classe' onChange={(e) => {SetClasse(e.target.value);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Estilo de Luta: </div>
-                                            <input type='text' value={EstilodeLuta} placeholder='EstilodeLuta' onChange={(e) => {SetEstilodeLuta(e.target.value);}}  className='text-2xl'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Idade: </div>
+                                            <input type='number' value={Idade} placeholder='idade' onChange={(e) => {SetIdade(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Aparência: </div>
+                                            <input type='text' value={Aparencia} placeholder='aparencia' onChange={(e) => {SetAparencia(e.target.value);}} className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Fruta: </div>
+                                            <input type='text' value={Fruta} placeholder='Fruta' onChange={(e) => {SetFruta(e.target.value);}} className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Raça: </div>
+                                            <input type='text' value={Raca} placeholder='raça' onChange={(e) => {SetRaca(e.target.value);}} className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Classe: </div>
+                                            <input type='text' value={Classe} placeholder='Classe' onChange={(e) => {SetClasse(e.target.value);}} className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Estilo de Luta: </div>
+                                            <input type='text' value={EstilodeLuta} placeholder='EstilodeLuta' onChange={(e) => {SetEstilodeLuta(e.target.value);}} className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
 
                                     </div>
                                 )}
                                 {(pages == 3) && (
-                                    <div  className='grid grid-cols-3 place-content-center w-5/6'>
+                                    <div  className='grid grid-cols-3 place-content-center lg:w-5/6'>
                                     <button onClick={()=>{SetPages(1)}}>X</button>
                                             <div  className='col-span-3 text-2xl'>Pontos</div> 
-                                            <div  className='text-2xl'>Força: </div>
-                                            <input type='Number' value={statusForca} placeholder='Status Forca' onChange={(e) => {SetStatusForca(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <input type='Number' value={0} placeholder='ForcaPor'   className='text-2xl'/>
-                                            <div  className='text-2xl'>Destreza: </div>
-                                            <input type='Number' value={statusDestreza} placeholder='Status Destreza' onChange={(e) => {SetStatusDestreza(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <input type='Number' value={0} placeholder='DestrezaPor'   className='text-2xl'/>
-                                            <div  className='text-2xl'>Constituição: </div>
-                                            <input type='Number' value={statusConstituicao} placeholder='Status Constituicao' onChange={(e) => {SetStatusConstituicao(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <input type='Number' value={0} placeholder='ConstituicaoPor'   className='text-2xl'/>
-                                          <div  className='text-2xl'>Inteligência: </div>
-                                            <input type='Number' value={statusInteligencia} placeholder='Status Inteligencia' onChange={(e) => {SetStatusInteligencia(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <input type='Number' value={0} placeholder='ForcaPor'   className='text-2xl'/>
-                                            <div  className='text-2xl'>Sabedoria: </div>
-                                            <input type='Number' value={statusSabedoria} placeholder='Status Sabedoria' onChange={(e) => {SetStatusSabedoria(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <input type='Number' value={0} placeholder='ForcaPor'   className='text-2xl'/>
-                                            <div  className='text-2xl'>Carisma: </div>
-                                            <input type='Number' value={statusCarisma} placeholder='Status Carisma' onChange={(e) => {SetStatusCarisma(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <input type='Number' value={0} placeholder='ForcaPor'   className='text-2xl'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Força: </div>
+                                            <input type='Number' value={statusForca} placeholder='Status Forca' onChange={(e) => {SetStatusForca(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor' className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Destreza: </div>
+                                            <input type='Number' value={statusDestreza} placeholder='Status Destreza' onChange={(e) => {SetStatusDestreza(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <input type='Number' value={0} placeholder='DestrezaPor' className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Constituição: </div>
+                                            <input type='Number' value={statusConstituicao} placeholder='Status Constituicao' onChange={(e) => {SetStatusConstituicao(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <input type='Number' value={0} placeholder='ConstituicaoPor' className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                          <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Inteligência: </div>
+                                            <input type='Number' value={statusInteligencia} placeholder='Status Inteligencia' onChange={(e) => {SetStatusInteligencia(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor' className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Sabedoria: </div>
+                                            <input type='Number' value={statusSabedoria} placeholder='Status Sabedoria' onChange={(e) => {SetStatusSabedoria(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor' className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Carisma: </div>
+                                            <input type='Number' value={statusCarisma} placeholder='Status Carisma' onChange={(e) => {SetStatusCarisma(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <input type='Number' value={0} placeholder='ForcaPor' className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
                                     </div>
                                 )}    
                                  {(pages == 4) && (
-                                    <div  className='grid grid-cols-2 place-content-center w-5/6'>
+                                    <div  className='grid grid-cols-2 place-content-center lg:w-5/6'>
                                     <button onClick={()=>{SetPages(1)}}>X</button>
                                         <div  className='col-span-2 text-2xl'>Pontos</div>
-                                            <div  className='text-2xl'>Gerais: </div>
-                                            <input type='Number' value={pontosGerais} placeholder='Gerais' onChange={(e) => {SetPontosGerais(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Força: </div>
-                                            <input type='Number' value={pontosForca} placeholder='Coragem' onChange={(e) => {SetPontosForca(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Coragem: </div>
-                                            <input type='Number' value={pontosCoragem} placeholder='Coragem' onChange={(e) => {SetPontosCoragem(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Furtivo: </div>
-                                            <input type='Number' value={pontosFurtivo} placeholder='Furtivo' onChange={(e) => {SetPontosFurtivo(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Inteligência: </div>
-                                            <input type='Number' value={pontosInteligencia} placeholder='Inteligencia' onChange={(e) => {SetPontosInteligencia(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Explorador: </div>
-                                            <input type='Number' value={pontosExplorador} placeholder='Explorador' onChange={(e) => {SetPontosExplorador(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Sorte: </div>
-                                            <input type='Number' value={pontosSorte} placeholder='Sorte' onChange={(e) => {SetPontosSorte(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Classe: </div>
-                                            <input type='Number' value={pontosClasse} placeholder='Classe' onChange={(e) => {SetPontosClasse(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Usuário: </div>
-                                            <input type='Number' value={pontosUsuario} placeholder='Usuario' onChange={(e) => {SetPontosUsuario(e.target.valueAsNumber);}}  className='text-2xl'/>
-                                            <div  className='text-2xl'>Haki: </div>
-                                            <input type='Number' value={pontosHaki} placeholder='Haki' onChange={(e) => {SetPontosHaki(e.target.valueAsNumber);}}  className='text-2xl'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Gerais: </div>
+                                            <input type='Number' value={pontosGerais} placeholder='Gerais' onChange={(e) => {SetPontosGerais(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Força: </div>
+                                            <input type='Number' value={pontosForca} placeholder='Coragem' onChange={(e) => {SetPontosForca(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Coragem: </div>
+                                            <input type='Number' value={pontosCoragem} placeholder='Coragem' onChange={(e) => {SetPontosCoragem(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Furtivo: </div>
+                                            <input type='Number' value={pontosFurtivo} placeholder='Furtivo' onChange={(e) => {SetPontosFurtivo(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Inteligência: </div>
+                                            <input type='Number' value={pontosInteligencia} placeholder='Inteligencia' onChange={(e) => {SetPontosInteligencia(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Explorador: </div>
+                                            <input type='Number' value={pontosExplorador} placeholder='Explorador' onChange={(e) => {SetPontosExplorador(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Sorte: </div>
+                                            <input type='Number' value={pontosSorte} placeholder='Sorte' onChange={(e) => {SetPontosSorte(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Classe: </div>
+                                            <input type='Number' value={pontosClasse} placeholder='Classe' onChange={(e) => {SetPontosClasse(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Usuário: </div>
+                                            <input type='Number' value={pontosUsuario} placeholder='Usuario' onChange={(e) => {SetPontosUsuario(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
+                                            <div  className='border border-gray-500 mb-2 mr-px text-2xl'>Haki: </div>
+                                            <input type='Number' value={pontosHaki} placeholder='Haki' onChange={(e) => {SetPontosHaki(e.target.valueAsNumber);}}  className='text-2xl border border-gray-500 mb-2 px-2 text-center'/>
                                     </div>
                                 )}
                                  {(pages == 5) && (
-                                    <div  className='grid grid-cols-1 place-content-center w-5/6'>
+                                    <div  className='grid grid-cols-1 place-content-center lg:w-5/6'>
                                     <button className='col-span-1' onClick={() => {SetPages(1)}}>X</button>
                                             <h3>Inventário:</h3><br/>
                                             <div  className=''>
@@ -415,7 +421,7 @@ export default function character2({
                                             </div>
                                             <div  className='grid grid-cols-2'>
                                                 <span  className=''>Beris</span>
-                                                <input type='number' value={dinheiro} placeholder='Dinheiro' onChange={(e) => {SetDinheiro(e.target.valueAsNumber);}}  className=''/>
+                                                <input type='number' value={dinheiro} placeholder='Dinheiro' onChange={(e) => {SetDinheiro(e.target.valueAsNumber);}}  className='text-center'/>
                                             </div>
                                                 <h3>Historia:</h3><br/>
                                             <div  className=''>    
@@ -423,19 +429,25 @@ export default function character2({
                                             </div>
                                         </div>
                                  )}
-                                {(pages == 6) && (<div>
-                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                {(pages == 6) && (<div className='lg:w-5/6'>
+                                    <div className='flex justify-between'>
                                     <button onClick={() =>{SetPages(9);SetNewTipe(0)}}>New</button>
+                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                    </div>
                                     {Truque?.map((use:NewTruque) => <div>{use.NameHab}</div>)}
                                 </div>)}
-                                {(pages == 7) && (<div>
-                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                {(pages == 7) && (<div className='lg:w-5/6'>
+                                    <div className='flex justify-between'>
                                     <button onClick={() =>{SetPages(9);SetNewTipe(1)}}>New</button>
+                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                    </div>
                                     {Tecnicas?.map((use:NewTruque) => <div>{use.NameHab}</div>)}
                                 </div>)}
-                                {(pages == 8) && (<div>
-                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                {(pages == 8) && (<div className='lg:w-5/6'>
+                                    <div className='flex justify-between'>
                                     <button onClick={() =>{SetPages(9);SetNewTipe(2)}}>New</button>
+                                    <button onClick={() => {SetPages(1)}}>X</button>
+                                    </div>
                                     {SuperMovimento?.map((use:NewTruque) => <div>{use.NameHab}</div>)}
                                 </div>)}  
                                 {(pages == 9) && (
