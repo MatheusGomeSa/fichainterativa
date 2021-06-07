@@ -1,6 +1,7 @@
+import { ObjectID } from 'bson';
 import Habilidade from'../utils/HabsClass';
 export default class Character{
-    _id:string;
+    _id:ObjectID;
     name:string;
     jogador:string;
     _idJogador:string;
@@ -41,8 +42,8 @@ export default class Character{
     truque:Array<object>;
     tecnica:Array<Habilidade>;
     supermovimento:Array<Habilidade>;
-    constructor(_id:string,Jogador:string,_idJogador:string,emailJogador:string,mesa:string,_idMesa:string){
-        this._id =_id;
+    constructor(Jogador:string,_idJogador:string,emailJogador:string,mesa:string,_idMesa:string){
+        this._id = new ObjectID();
         this.jogador = Jogador;
         this._idJogador = _idJogador;
         this.emailJogador = emailJogador;

@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Db, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import connect from '../../utils/database'
 import { getSession } from 'next-auth/client'
-    
+import Character from '../../utils/characterClass';
+
 interface ErrorResponseType{
     error: string
 }
@@ -60,9 +61,9 @@ export default async (
                 return  
             }
             const { personagem,jogador,idUser,mesa,idMesa,emailUser } = req.body;
+            const Newpersonagem = new Character(jogador,idUser,emailUser,mesa,idMesa);
 
-
-            if(!personagem || !jogador || !idUser || !mesa || !idMesa ||!emailUser ){
+            if(  !jogador || !idUser || !mesa || !idMesa ||!emailUser ){
                 res.status(400).json({
                     error:"ERRO: Missing information"
                 })
@@ -76,58 +77,16 @@ export default async (
             }
             const playerExist = await db.collection('users').findOne({email: emailUser});
             if(!playerExist){
-                res.status(400).json({error:"User already exist"});
+                res.status(400).json({error:"User not exist"});
                 return
             }
-            const personagemExist = await db.collection("personagens").findOne({personagem:personagem});
+            const personagemExist = await db.collection("personagens").findOne({_id:Newpersonagem._id});
             if(personagemExist){
-                res.status(400).json({error:"Personage not exist"});
+                res.status(400).json({error:"Personage already exist"});
                 return
             }
-            const response = await db.collection('personagens').insertOne({
-                personagem,
-                jogador,
-                idUser,
-                emailUser,
-                mesa,
-                idMesa,
-                idade : 0,
-                aparencia : 0,
-                fruta : "Nenhuma",
-                raca : "Humano",
-                classe : "Capitão",
-                estilodeluta : "Punch Style",
-                vidaatual : 0,
-                vidatotal : 0,
-                Staminaatula : 0,
-                StaminaTotal : 0,
-                Infeccao : 0,
-                Niveldeprocurado : 1,
-                StatusForca : 0,
-                StatusDestreza : 0,
-                StatusConstituicao : 0,
-                StatusInteligencia : 0,
-                StatusSabedoria : 0,
-                StatusCarisma : 0,
-                PontosGerais : 0,
-                PontosForca : 0,
-                PontosCoragem : 0,
-                PontosFurtivo : 0,
-                PontosInteligencia : 0,
-                PontosExplorador : 0,
-                PontosSorte : 0,
-                PontosClasse : 0,
-                PontosUsuario : 0,
-                PontosHaki : 0,
-                Inventario : "",
-                Dinheiro : 0,
-                Historia : "",
-                Truque:[],
-                Tecnica:[],
-                SuperMovimento: []
-
-    });
-    const personagemAlreadyExist = await db.collection('users').findOne({email: emailUser, personagens:personagem});
+            const response = await db.collection('personagens').insertOne(Newpersonagem);
+    const personagemAlreadyExist = await db.collection('users').findOne({email: emailUser, _id:Newpersonagem._id});
     const id_Personagem = response.ops[0]._id;
         if(!personagemAlreadyExist){
             await db.collection('users').updateOne({ email: emailUser},{$push: {

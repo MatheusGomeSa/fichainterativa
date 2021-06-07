@@ -32,7 +32,7 @@ const ProfilePage: NextPage = () => {
     }
     const data2 = {
         personagem:name_personage,
-        jogador:data?.data.Jogador,
+        jogador:data?.data.jogador,
         idUser:data?.data._id,
         emailUser:data?.data.email,
         mesa:mesa_name,
@@ -40,7 +40,7 @@ const ProfilePage: NextPage = () => {
     }
     const data3 = {
         Name_Mesa:name_mesa,
-        Name_Mestre:data?.data.Jogador,
+        Name_Mestre:data?.data.jogador,
         id_Mestre:data?.data._id,
         email_mestre:data?.data.email,
     }
@@ -158,10 +158,10 @@ const ProfilePage: NextPage = () => {
                 <div className='flex justify-between my-10 text-2xl text-center font-lato'>
                     <h3>Suas Mesas:</h3><button className='rounded-full bg-secondary w-10 h-10' onClick={() =>{SetnewTable(true)}}>+</button></div>
                 <section className='flex w-full flex-no-wrap font-roboto'>
-                    {data.data.mesas.map(use => <div className='flex-shrink mx-4 w-1/5 rounded-lg shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110' style={{height:'25vh'}}>
+                    {data.data.mesa.map(use => <div className='flex-shrink mx-4 w-1/5 rounded-lg shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110' style={{height:'25vh'}}>
                                                 <Link href={`${process.env.NEXT_PUBLIC_URL}/table/${use[2]}`} prefetch={false}><a>
                                                 <div className='bg-tertiary px-6 py-1 rounded-t-lg overflow-hidden  ' style={{height:'30%',border: '1px solid gray'}}><b>{use[1]}</b></div>
-                                                <div className='flex justify-end bg-personagem bg-cover bg-center rounded-b-lg bg-local'style={{height:'70%',border: '1px solid gray'}}><button className='self-end m-2 px-2 bg-danger rounded-full text-white' onClick={() =>delData2(use[2])}>X</button></div></a></Link></div>)}
+        <div className='flex justify-end bg-personagem bg-cover bg-center rounded-b-lg bg-local'style={{height:'70%',border: '1px solid gray'}}><button className='self-end m-2 px-2 bg-danger rounded-full text-white' onClick={() =>delData2(use[2])}>X</button></div></a></Link></div>)}
                 </section>
                 </div>
             </div>

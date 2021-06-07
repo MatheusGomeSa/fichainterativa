@@ -1,4 +1,3 @@
-import { Db, ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import connect from '../../../utils/database';
     

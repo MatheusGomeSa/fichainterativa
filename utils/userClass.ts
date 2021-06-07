@@ -1,17 +1,18 @@
+import { ObjectId } from 'mongodb'
 export default class User{
-    _id:string;
+    _id: ObjectId;
     nickName:string;
     email:string;
     jogador:string;
     mesa: Array<Array<string>>
     personagens: Array<Array<string>>
-    constructor(_id:string,nickname:string,email:string,jogador:string){
-        this._id = _id;
+    constructor(nickname:string,email:string,jogador:string){
         this.nickName = nickname;
         this.email = email;
         this.jogador = jogador;
         this.mesa = [];
         this.personagens = [];
+        this._id = new ObjectId();
     }
     set Nickname(value){
         this.nickName = value;

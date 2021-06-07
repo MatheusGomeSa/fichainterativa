@@ -1,13 +1,15 @@
+import { ObjectID } from "bson";
+
 export default class Table{
-    _id:string;
+    _id:ObjectID;
     name:string;
     mestre:string;
     emailMestre:string;
     _idMestre:string;
     jogadores:Array<string>
     personagens:Array<Array<string>>
-    constructor(_id:string,name:string,mestre:string,emailMestre:string,_idMestre:string){
-        this._id = _id;
+    constructor(name:string,mestre:string,emailMestre:string,_idMestre:string){
+        this._id = new ObjectID();
         this.name = name;
         this.mestre = mestre;
         this.emailMestre = emailMestre;

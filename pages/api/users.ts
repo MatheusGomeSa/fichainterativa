@@ -1,8 +1,8 @@
-import { Db, ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/client'
 import connect from '../../utils/database';
-    
+import User from '../../utils/userClass';
+
 interface ErrorResponseType{
     error: string;
 }
@@ -25,7 +25,7 @@ export default async (
                 return  
             }
             const { Jogador,idUser,email } = req.body;
-
+            const newUser = new User(Jogador,email,idUser)
             if(!idUser || !Jogador || !email){
                 res.status(400).json({
                     error:"ERRO: Missing information"
@@ -33,13 +33,7 @@ export default async (
                 return
             }
             const { db } = await connect();
-            const response = await db.collection('users').insertOne({
-                idUser,
-                email,
-                Jogador,
-                mesas:[],
-                personagens: [],
-    });
+            const response = await db.collection('users').insertOne(newUser);
     res.status(200).json(response.ops[0]);
     } 
 }
