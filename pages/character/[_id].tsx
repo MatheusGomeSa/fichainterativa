@@ -77,7 +77,7 @@ export default function character2(data:character):JSX.Element{
                                 </svg></Link></a>
                         <button className='mr-16' onClick={()=>Setmenu(!menu)}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
                     </div>
-                    <div className={`${ menu ? 'w-0':'hidden'} absolute rounded-lg bg-primary shadow-2xl`} style={{border: '1px solid #ccc',right:'1rem',width:'14rem',height:'25rem', top:'4.5rem'}}>
+                    <div className={`${ menu ? 'w-0':'hidden'} absolute rounded-lg bg-primary shadow-2xl`} style={{border: '1px solid #ccc',right:'10%',width:'80%',height:'80%', top:'10%'}}>
                                         <div className='flex flex-col justify-items-center'>
                                             <div className='flex justify-center items-center' style={{borderTop:'1px solid #ccc'}}><button onClick={() => SetPages(1)} className='text-base p-3'>Principal</button></div>
                                             <div className='flex justify-center items-center' style={{borderTop:'1px solid #ccc'}}><button onClick={() => SetPages(2)} className='text-base p-3'>Informação</button></div>
@@ -89,7 +89,35 @@ export default function character2(data:character):JSX.Element{
                                             <div className='flex justify-center items-center' style={{borderTop:'1px solid #ccc'}}><button onClick={() => SetPages(8)} className='text-base p-3'>Super Movimento</button></div>
                                         </div>
                                     </div>
-                    <div >
+                    <div className='absolute rounded-lg bg-primary shadow-2xl p-24' style={{border: '1px solid #ccc',left:'6rem',width:'83rem',height:'40rem', top:'6rem'}}>
+                    <form onSubmit={AttTruques}>
+                                            <label htmlFor='NomedaHabilidade' className='mx-2'>Nome da Habilidade</label>
+                                            <input id='NomedaHabilidade'  className='' type='text'   value={NomeHab} onChange={(e) => {SetNomeHab(e.target.value)}}/><br/>
+                                            <label htmlFor='danoD20'>D20:</label>
+                                            <input id='danoD20'  className='' type='number' value={Habd20} onChange={(e) => {SetHabd20(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD12'>D12:</label>
+                                            <input id='danoD12'  className='' type='number' value={Habd12} onChange={(e) => {SetHabd12(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD10'>D10:</label>
+                                            <input id='danoD10'  className='' type='number' value={Habd10} onChange={(e) => {SetHabd10(e.target.valueAsNumber)}}/><br/>
+                                            <label htmlFor='danoD8'>D8:</label>
+                                            <input id='danoD8'  className='' type='number' value={Habd8} onChange={(e) => {SetHabd8(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD6'>D6:</label>
+                                            <input id='danoD6'  className='' type='number' value={Habd6} onChange={(e) => {SetHabd6(e.target.valueAsNumber)}}/>
+                                            <label htmlFor='danoD4'>D4:</label>
+                                            <input id='danoD4'  className='' type='number' value={Habd4} onChange={(e) => {SetHabd4(e.target.valueAsNumber)}}/>
+                                            <div>
+                                                <input type="radio" id='Have' onChange={()=>SetHaveTest(true)}/>
+                                                <label htmlFor="Have" className='mx-10'>Have</label>
+                                                <input type="radio" id='DontHave' onChange={ ()=>SetHaveTest(false)} />
+                                                <label htmlFor='DontHave' className='mx-10'>Don't Have</label>
+                                            </div>
+                                            <label htmlFor='CustoHabilidade' className='mx-2'>Custo</label>
+                                            <input id='CustoHabilidade'className='bg-pink-200 my-3 w-48' type='number' value={HabCusto} onChange={(e) => {SetHabCusto(e.target.valueAsNumber)}}/><br/>
+                                            <textarea  className='' value={HabExplain} onChange={(e)=> SetHabExplain(e.target.value)}></textarea><br/>
+                                            <button className='p-1 bg-blue-700 rounded-t-sm'  type='submit'>Criar Truque</button>
+                                        </form>
+                    </div>
+                    <div>
                     <form  onSubmit={PersonSubmit} className='flex content-center justify-center overflow-auto' style={{height:"95vh"}}>
 
                         <div className='grid lg:grid-cols-2 grid-cols-1 place-content-center place-items-center lg:mx-16 m-8 gap-16'>
@@ -255,32 +283,7 @@ export default function character2(data:character):JSX.Element{
                                 </div>)}  
                                 {(pages == 9) && (
                                     <div>
-                                        <form onSubmit={AttTruques}>
-                                            <label htmlFor='NomedaHabilidade' className='mx-2'>Nome da Habilidade</label>
-                                            <input id='NomedaHabilidade'  className='' type='text'   value={NomeHab} onChange={(e) => {SetNomeHab(e.target.value)}}/><br/>
-                                            <label htmlFor='danoD20'>D20:</label>
-                                            <input id='danoD20'  className='' type='number' value={Habd20} onChange={(e) => {SetHabd20(e.target.valueAsNumber)}}/>
-                                            <label htmlFor='danoD12'>D12:</label>
-                                            <input id='danoD12'  className='' type='number' value={Habd12} onChange={(e) => {SetHabd12(e.target.valueAsNumber)}}/>
-                                            <label htmlFor='danoD10'>D10:</label>
-                                            <input id='danoD10'  className='' type='number' value={Habd10} onChange={(e) => {SetHabd10(e.target.valueAsNumber)}}/><br/>
-                                            <label htmlFor='danoD8'>D8:</label>
-                                            <input id='danoD8'  className='' type='number' value={Habd8} onChange={(e) => {SetHabd8(e.target.valueAsNumber)}}/>
-                                            <label htmlFor='danoD6'>D6:</label>
-                                            <input id='danoD6'  className='' type='number' value={Habd6} onChange={(e) => {SetHabd6(e.target.valueAsNumber)}}/>
-                                            <label htmlFor='danoD4'>D4:</label>
-                                            <input id='danoD4'  className='' type='number' value={Habd4} onChange={(e) => {SetHabd4(e.target.valueAsNumber)}}/>
-                                            <div>
-                                                <input type="radio" id='Have' onChange={()=>SetHaveTest(true)}/>
-                                                <label htmlFor="Have" className='mx-10'>Have</label>
-                                                <input type="radio" id='DontHave' onChange={ ()=>SetHaveTest(false)} />
-                                                <label htmlFor='DontHave' className='mx-10'>Don't Have</label>
-                                            </div>
-                                            <label htmlFor='CustoHabilidade' className='mx-2'>Custo</label>
-                                            <input id='CustoHabilidade'className='bg-pink-200 my-3 w-48' type='number' value={HabCusto} onChange={(e) => {SetHabCusto(e.target.valueAsNumber)}}/><br/>
-                                            <textarea  className='' value={HabExplain} onChange={(e)=> SetHabExplain(e.target.value)}></textarea><br/>
-                                            <button className='p-1 bg-blue-700 rounded-t-sm'  type='submit'>Criar Truque</button>
-                                        </form>
+                                        
                                     </div>
                                 )}
                         </div>
